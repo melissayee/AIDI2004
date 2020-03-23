@@ -1,0 +1,139 @@
+<!doctype html>  
+<html>  
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			<style>
+				body {
+				  font-family: "Lato", sans-serif;
+				}
+
+				.sidenav {
+				  height: 100%;
+				  width: 160px;
+				  position: fixed;
+				  z-index: 1;
+				  top: 0;
+				  left: 0;
+				  background-color: #111;
+				  overflow-x: hidden;
+				  padding-top: 20px;
+				}
+
+				.sidenav a {
+				  padding: 6px 8px 6px 16px;
+				  text-decoration: none;
+				  font-size: 25px;
+				  color: #818181;
+				  display: block;
+				}
+
+				.sidenav a:hover {
+				  color: #f1f1f1;
+				}
+				
+				.sidenav a:active {
+				  color: #30adf0;
+				}
+				
+				.main {
+				  margin-left: 160px; /* Same as the width of the sidenav */
+				  font-size: 14px;
+				  padding: 0px 10px;
+				}
+
+				@media screen and (max-height: 450px) {
+				  .sidenav {padding-top: 15px;}
+				  .sidenav a {font-size: 18px;}
+				}
+
+				table {
+				  border-spacing: 0;
+				  width: 100%;
+				  border: 1px solid #ddd;
+				}
+
+				th, td {
+				  text-align: left;
+				  font-size: 14px;
+				}
+
+				tr:nth-child(even) {
+				  background-color: #f2f2f2
+				}
+
+				div.tableContainer {
+					clear: both;
+					border: 1px solid #ddd;
+					height: 285px;
+					overflow: auto;
+					width: 100%
+				}
+
+				thead.fixedHeader tr {
+					position: relative;
+				}
+
+				html>body tbody.scrollContent {
+					display: block;
+					height: 262px;
+					overflow: auto;
+					width: 100%
+				}
+
+				html>body thead.fixedHeader {
+					display: table;
+					overflow: auto;
+					width: 100%
+				}
+
+				a:link {
+				  text-decoration: none;
+				}
+
+				a:visited {
+				  text-decoration: none;
+				}
+
+				a:hover {
+				  text-decoration: none;
+				}
+
+				a:active {
+				  text-decoration: none;
+				}
+			</style>
+	</head>
+   <body> 
+	<div class="sidenav">
+	  <a href= {{ url_for('home_page') }}>Home</a>
+	  <a href= {{ url_for('summary') }}>Summary</a>
+	  <a href= {{ url_for('new') }}>New</a>
+	  <a href= {{ url_for('delete_records') }}>Delete</a>
+	</div>
+	
+	<div class="main"> 
+	<title>Summary</title>
+	<h1>Summary</h1>
+	<h3>Summary of all student payments owed</h3>
+	<p>Select a Student ID to see details</p>  
+	  <table border = 1>
+            <tr>  
+			  {% for key, value in result[0].items() %}
+               <th> {{ key.replace('_', ' ').title() }} </th>
+			  {% endfor %} 
+            </tr>
+			{% for row in result %}
+			<tr>
+				{% for key, value in row.items() %}
+					{% if key == 'student_id' %}
+						<td> <a href= {{ url_for('student_detail', student_id = value) }}> {{ value }} </a></td>
+						{% else %}
+						<td> {{ value }} </td>
+					{% endif %}
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</table>  
+	</div>
+   </body>  
+</html>  
