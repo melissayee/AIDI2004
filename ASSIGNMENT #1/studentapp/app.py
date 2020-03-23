@@ -2,7 +2,7 @@ import sqlite3
 
 from flask import g, Flask, render_template, request
 
-database = r"C:\Users\melissa\OneDrive\Documents\DURHAM COLLEGE\AIDI\1B\AIDI 2004 - AI In Enterprise Systems\ASSIGNMENTS\ASSIGNMENT #1\studentapp\db\students.db"
+database = r"db\students.db"
 
 app = Flask(__name__)
 
@@ -121,7 +121,6 @@ def delete_confirm():
     if request.method == 'POST':
         # Get list of IDs from checkboxes
         delete_ids = request.form.getlist('delete_id')
-        print(delete_ids)
 
         # Create SQL query to hold all IDs
         query = """SELECT * FROM students WHERE student_id in ({});""".format(','.join(['?']*len(delete_ids)))
